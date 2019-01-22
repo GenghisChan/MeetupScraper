@@ -4,8 +4,8 @@ const Table = require('cli-table');
 
 let users = [];
 let table = new Table({
-  head: ['id', 'user_id', 'name', 'title', 'company', 'reason'],
-  colWidths: [5, 10, 15, 30, 30, 50]
+  head: ['id','name', 'title', 'company', 'reason'],
+  colWidths: [5, 15, 30, 30, 60]
 })
 
 const options = {
@@ -18,7 +18,6 @@ rp(options)
   let userData = [];
 
   for (let member of data.responses[0].value) {
-    console.log(member.member.id)
     if(member.response == "yes"){
       userData.push({id: member.member.id, name: member.member.name});
     }
@@ -47,7 +46,7 @@ const getUserIntention = (userData) => {
           const company = $("#D_memberProfileQuestions .D_memberProfileContentItem:nth-child(4) p").text()
           const reason = $("#D_memberProfileQuestions .D_memberProfileContentItem:nth-child(6) p").text()
 
-          table.push([i, userData[i].id, userData[i].name, title, company, reason])
+          table.push([i, userData[i].name, title, company, reason])
           ++i;
           return next();
         })
