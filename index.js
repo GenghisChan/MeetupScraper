@@ -4,8 +4,8 @@ const Table = require('cli-table');
 
 let users = [];
 let table = new Table({
-  head: ['u_id', 'name', 'title', 'company', 'intention'],
-  colWidths: [10, 15, 10, 15, 30]
+  head: ['id', 'user_id', 'name', 'title', 'company', 'reason'],
+  colWidths: [5, 10, 15, 30, 30, 50]
 })
 
 const options = {
@@ -27,6 +27,7 @@ rp(options)
     }
   }
   process.stdout.write('loading');
+  console.log(userData.length)
   getUserIntention(userData);
 })
 .catch((err) => console.log(err))
@@ -41,9 +42,12 @@ const getUserIntention = (userData) => {
       }
       rp(options)
         .then(function ($) {
-          process.stdout.write('.');
-          const title = $(".D_memberProfileQuestions:nth-child(3) p").text()
-          table.push([userData[i].id, userData[i].name, title, company, intention])
+          process.stdout.write('.')
+          const title = $("#D_memberProfileQuestions .D_memberProfileContentItem:nth-child(3) p").text()
+          const company = $("#D_memberProfileQuestions .D_memberProfileContentItem:nth-child(4) p").text()
+          const reason = $("#D_memberProfileQuestions .D_memberProfileContentItem:nth-child(6) p").text()
+
+          table.push([i, userData[i].id, userData[i].name, title, company, reason])
           ++i;
           return next();
         })
