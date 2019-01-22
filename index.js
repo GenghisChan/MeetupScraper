@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const cheerio  = require('cheerio');
-const Table = require('cli-table');
+const Table = require('cli-table')
 
 let users = [];
 let table = new Table({
